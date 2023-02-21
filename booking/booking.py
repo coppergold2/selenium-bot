@@ -3,11 +3,14 @@ import booking.constants as const
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 
+
+
 class Booking(webdriver.Firefox):
     def __init__(self, teardown = False): # driver path missing  
         super(Booking, self).__init__()
+        
         self.teardown = teardown
-        self.implicitly_wait(15)
+        self.implicitly_wait(3)
         self.maximize_window()
     def land_first_page(self):
         self.get(const.BASE_URL)
@@ -34,14 +37,26 @@ class Booking(webdriver.Firefox):
             self.find_element(By.CSS_SELECTOR,'li[data-i="0"]').click()
         time.sleep(4)
     def select_dates(self,check_in_date,check_out_date):
-        check_in_element = self.find_element(
+        try:
+            check_in_element = self.find_element(
             By.CSS_SELECTOR,
             f'td[data-date="{check_in_date}"]'
         )
+        except:
+            check_in_element = self.find_element(
+                By.CSS_SELECTOR,
+                f'span[data-date="{check_in_date}"]'
+        )
         check_in_element.click()
-        check_out_element = self.find_element(
+        try:
+            check_out_element = self.find_element(
             By.CSS_SELECTOR,
             f'td[data-date="{check_out_date}"]'
+        )
+        except:
+            check_out_element = self.find_element(
+                By.CSS_SELECTOR,
+                f'span[data-date="{check_out_date}"]'
         )
         check_out_element.click()
 
