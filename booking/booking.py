@@ -8,7 +8,6 @@ from selenium import webdriver
 class Booking(webdriver.Firefox):
     def __init__(self, teardown = False): # driver path missing  
         super(Booking, self).__init__()
-        
         self.teardown = teardown
         self.implicitly_wait(3)
         self.maximize_window()
@@ -25,18 +24,24 @@ class Booking(webdriver.Firefox):
             if element.text == currency:
                 element.click()
                 break
-        time.sleep(4)
     def select_place_to_go(self,place_to_go):
         search_field = self.find_element(By.NAME, 'ss')
         search_field.click()
         search_field.send_keys(place_to_go)
-        time.sleep(2)
+        time.sleep(1)
         try:
             self.find_element(By.CLASS_NAME,'a40619bfbe').click()
         except:
             self.find_element(By.CSS_SELECTOR,'li[data-i="0"]').click()
-        time.sleep(4)
-    def select_dates(self,check_in_date,check_out_date):
+        
+    def catch_login_ad(self):
+            time.sleep(1)
+            iframe = self.find_element(By.CSS_SELECTOR,'iframe[title = "Sign in with Google Dialog"]')
+            self.switch_to.frame(iframe)
+            close_button = self.find_element(By.CLASS_NAME,"Bz112c-r9oPif")
+            close_button.click()
+            self.switch_to.default_content()
+    def select_dates(self,check_in_date,check_out_date):  # current code cannot select date in the next two or more months, but can be implemented
         try:
             check_in_element = self.find_element(
             By.CSS_SELECTOR,
@@ -59,5 +64,6 @@ class Booking(webdriver.Firefox):
                 f'span[data-date="{check_out_date}"]'
         )
         check_out_element.click()
-
-        
+    def select_adults(self,count):
+        selection_element = self.find_element(By.CSS_SELECTOR,'button[data-testid="occupancy-config"]')
+        selection_element.click()    
