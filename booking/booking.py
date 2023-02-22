@@ -65,5 +65,26 @@ class Booking(webdriver.Firefox):
         )
         check_out_element.click()
     def select_adults(self,count):
-        selection_element = self.find_element(By.CSS_SELECTOR,'button[data-testid="occupancy-config"]')
-        selection_element.click()    
+        try:
+            selection_element = self.find_element(By.CSS_SELECTOR,'button[data-testid="occupancy-config"]')
+            selection_element.click()
+        except:
+            selection_element = self.find_element(By.CLASS_NAME,'xp__input-group.xp__guests')
+            selection_element.click()
+       
+        decrease_adult_element  = self.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/form/div[1]/div[3]/div/div/div/div/div[1]/div[2]/button[1]')
+        adults_value_element = int(self.find_element(By.ID,'group_adults').get_attribute('value'))
+        while True:
+            print("hi")
+            if (adults_value_element != 1): 
+                decrease_adult_element.click()
+            else:
+                break
+        
+        increase_adult_element = self.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/form/div[1]/div[3]/div/div/div/div/div[1]/div[2]/button[2]')
+        while True:
+            if (adults_value_element < count):
+                increase_adult_element.click()
+            else:
+                break
+
