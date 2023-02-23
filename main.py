@@ -4,6 +4,7 @@ import time
 start = time.time()
 with Booking() as bot:
     bot.land_first_page()
+    bot.change_language_to_Eng()
     bot.catch_login_ad()
     #bot.change_currency(currency="CAD")
     bot.select_place_to_go('Zhanjiang')
