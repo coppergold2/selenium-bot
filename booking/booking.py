@@ -87,9 +87,7 @@ class Booking(webdriver.Firefox):
             decrease_adult_element  = self.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/form/div[1]/div[3]/div/div/div/div/div[1]/div[2]/button[1]')
         while True:
             adults_value_element = int(self.find_element(By.ID,'group_adults').get_attribute('value'))
-            print("hi")
             if (adults_value_element != 1): 
-                print(adults_value_element)
                 decrease_adult_element.click()
             else:
                 break
@@ -103,4 +101,13 @@ class Booking(webdriver.Firefox):
                 increase_adult_element.click()
             else:
                 break
+    def search(self):
+        try: 
+            search_button = self.find_element(By.CLASS_NAME,'aa11d0d5cd')
+            search_button.click()
+        except:
+            search_button = self.find_element(By.CLASS_NAME, 'js-sb-submit-text')
+            search_button.click()
+
+
 
