@@ -11,5 +11,6 @@ with Booking() as bot:
     bot.select_dates(check_in_date='2023-03-05',check_out_date='2023-03-08')
     bot.select_adults(1)
     bot.search()
+    bot.apply_filtration()
 end = time.time()
 print("total run time " + str(end - start) )

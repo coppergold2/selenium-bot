@@ -2,7 +2,7 @@ import time
 import booking.constants as const
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-
+from booking.booking_filtration import BookingFiltration
 
 
 class Booking(webdriver.Firefox):
@@ -38,7 +38,7 @@ class Booking(webdriver.Firefox):
         search_field = self.find_element(By.NAME, 'ss')
         search_field.click()
         search_field.send_keys(place_to_go)
-        time.sleep(1)
+        
         try:
             self.find_element(By.CLASS_NAME,'a40619bfbe').click()
         except:
@@ -108,6 +108,10 @@ class Booking(webdriver.Firefox):
         except:
             search_button = self.find_element(By.CLASS_NAME, 'js-sb-submit-text')
             search_button.click()
+    def apply_filtration(self):
+        filtration = BookingFiltration(driver = self)
+        filtration.apply_star_rating(3,4,5)
+
 
 
 
