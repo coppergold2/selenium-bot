@@ -3,7 +3,7 @@ import booking.constants as const
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 from booking.booking_filtration import BookingFiltration
-
+from selenium.webdriver.common.keys import Keys
 
 class Booking(webdriver.Firefox):
     def __init__(self, teardown = False): # driver path missing  
@@ -36,9 +36,9 @@ class Booking(webdriver.Firefox):
                 break
     def select_place_to_go(self,place_to_go):
         search_field = self.find_element(By.NAME, 'ss')
-        search_field.click()
         search_field.send_keys(place_to_go)
-        
+        time.sleep(1)
+        search_field.send_keys(Keys.SPACE)
         try:
             self.find_element(By.CLASS_NAME,'a40619bfbe').click()
         except:
@@ -111,6 +111,8 @@ class Booking(webdriver.Firefox):
     def apply_filtration(self):
         filtration = BookingFiltration(driver = self)
         filtration.apply_star_rating(3,4,5)
+        time.sleep(1)
+        filtration.sort_search_result()
 
 
 
